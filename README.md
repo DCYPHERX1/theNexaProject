@@ -121,7 +121,7 @@ SUPABASE_URL
 SUPABASE_PUBLISHABLE_KEY
 RECAPTCHA_SITE_KEY
 NEXA_API_BASE_URL=https://your-backend.example.com
-ROOT_SUPER_ADMIN_EMAIL=admin.nexaa@gmail.com
+ROOT_SUPER_ADMIN_EMAIL=your-admin-email@example.com
 ```
 
 `npm run build` writes `js/runtime-config.js` with browser-safe values only. Do not put service role keys, Gmail app passwords, or root passwords in Cloudflare Pages.

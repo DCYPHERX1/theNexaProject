@@ -18677,3 +18677,538 @@ body:has(.super-admin-page) .notification-head span {
     height: 11px !important;
   }
 }
+
+/* Supplied Nexa landing page implementation. Scoped to the public home route so
+   authenticated workspaces keep their existing dashboard/admin styling. */
+body.landing-mode {
+  --background: 300 28% 97%;
+  --foreground: 240 10% 10%;
+  --card: 0 0% 100%;
+  --primary: 300 100% 25%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 300 32% 94%;
+  --secondary-foreground: 300 70% 24%;
+  --muted: 300 16% 93%;
+  --muted-foreground: 292 12% 43%;
+  --accent: 43 97% 48%;
+  --accent-foreground: 30 60% 10%;
+  --border: 300 18% 88%;
+  --input: 300 18% 88%;
+  --ring: 300 100% 25%;
+  --shadow-soft: 0 14px 38px hsl(300 10% 12% / 0.055), inset 0 1px 0 0 hsl(0 0% 100% / 0.6);
+  --shadow-lift: 0 30px 80px -20px hsl(300 100% 25% / 0.15);
+  --shadow-button: none;
+  --shadow-button-hover: none;
+  background: hsl(var(--background));
+}
+
+body.landing-mode .site-header {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 100 !important;
+  height: 64px !important;
+  min-height: 64px !important;
+  border-bottom: 1px solid hsl(var(--border) / 0.4) !important;
+  background: hsl(var(--card) / 0.78) !important;
+  box-shadow: var(--shadow-soft) !important;
+  backdrop-filter: blur(20px) saturate(1.08) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(1.08) !important;
+}
+
+body.landing-mode .header-inner {
+  width: min(1400px, 100%) !important;
+  height: 64px !important;
+  display: grid !important;
+  grid-template-columns: auto minmax(0, 1fr) auto !important;
+  gap: 16px !important;
+  padding: 0 2rem !important;
+}
+
+body.landing-mode .brand {
+  min-width: 0 !important;
+  height: auto !important;
+  gap: 8px !important;
+}
+
+body.landing-mode .brand-icon {
+  width: 32px !important;
+  height: 32px !important;
+  border: 0 !important;
+  border-radius: 8px !important;
+  background: linear-gradient(180deg, hsl(var(--primary)), hsl(292 88% 32%)) !important;
+  box-shadow: 0 10px 22px hsl(var(--primary) / 0.18) !important;
+}
+
+body.landing-mode .brand-icon svg {
+  width: 16px !important;
+  height: 16px !important;
+}
+
+body.landing-mode .brand-logo {
+  width: auto !important;
+  height: 20px !important;
+}
+
+body.landing-mode .desktop-nav {
+  justify-self: center !important;
+  width: auto !important;
+  height: auto !important;
+  display: inline-flex !important;
+  gap: 4px !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+body.landing-mode .desktop-nav button {
+  width: auto !important;
+  min-width: 0 !important;
+  height: 36px !important;
+  min-height: 36px !important;
+  border-radius: 8px !important;
+  padding: 0 12px !important;
+  color: hsl(var(--muted-foreground)) !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  background: transparent !important;
+}
+
+body.landing-mode .desktop-nav button:hover {
+  color: hsl(var(--foreground)) !important;
+  background: hsl(var(--muted)) !important;
+}
+
+body.landing-mode .sign-in {
+  height: 36px !important;
+  min-height: 36px !important;
+  border: 0 !important;
+  border-radius: 8px !important;
+  padding: 0 14px !important;
+  gap: 6px !important;
+  color: hsl(var(--primary-foreground)) !important;
+  background: linear-gradient(180deg, hsl(var(--primary)), hsl(292 88% 32%)) !important;
+  box-shadow: 0 10px 22px hsl(var(--primary) / 0.18) !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+}
+
+body.landing-mode .sign-in span {
+  font-size: 0;
+}
+
+body.landing-mode .sign-in span::after {
+  content: "Sign In";
+  font-size: 14px;
+}
+
+body.landing-mode .home-page {
+  min-height: calc(100vh - 4rem);
+  overflow: hidden;
+  padding-top: 64px;
+}
+
+body.landing-mode .hero-section {
+  min-height: auto !important;
+  display: block !important;
+  overflow: hidden !important;
+  padding: 64px 0 96px !important;
+  background: hsl(var(--background)) !important;
+}
+
+body.landing-mode .hero-section::before,
+body.landing-mode .hero-section::after,
+body.landing-mode .glow {
+  display: none !important;
+}
+
+body.landing-mode .hero-blob {
+  display: block !important;
+  position: absolute !important;
+  border-radius: 999px !important;
+  pointer-events: none !important;
+  z-index: 0 !important;
+}
+
+body.landing-mode .hero-blob-primary {
+  top: 80px !important;
+  left: 40px !important;
+  width: 288px !important;
+  height: 288px !important;
+  background: hsl(300 100% 25% / 0.2) !important;
+  filter: blur(80px) !important;
+}
+
+body.landing-mode .hero-blob-accent {
+  right: 40px !important;
+  bottom: 40px !important;
+  width: 320px !important;
+  height: 320px !important;
+  background: hsl(43 97% 52% / 0.15) !important;
+  filter: blur(90px) !important;
+}
+
+body.landing-mode .hero-blob-center {
+  top: 50% !important;
+  left: 50% !important;
+  width: 500px !important;
+  height: 500px !important;
+  background: hsl(300 100% 25% / 0.07) !important;
+  filter: blur(120px) !important;
+  transform: translate(-50%, -50%) !important;
+}
+
+body.landing-mode .hero-content {
+  position: relative !important;
+  z-index: 10 !important;
+  max-width: 768px !important;
+  padding: 0 1rem !important;
+}
+
+body.landing-mode .brand-pill {
+  height: 32px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  border: 1px solid hsl(var(--primary) / 0.2) !important;
+  border-radius: 999px !important;
+  padding: 0 16px !important;
+  color: hsl(var(--primary)) !important;
+  background: hsl(var(--primary) / 0.05) !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+}
+
+body.landing-mode .brand-pill svg {
+  width: 14px !important;
+  height: 14px !important;
+  color: hsl(var(--primary)) !important;
+  animation: nexaa-star-spark 2s ease-in-out infinite !important;
+}
+
+body.landing-mode .brand-pill img {
+  width: auto !important;
+  height: 16px !important;
+}
+
+body.landing-mode .hero-content h1 {
+  margin: 32px 0 !important;
+  font-family: "Space Grotesk", Inter, system-ui, sans-serif !important;
+  font-size: clamp(48px, 7.4vw, 96px) !important;
+  line-height: 1.05 !important;
+  letter-spacing: 0 !important;
+  font-weight: 700 !important;
+}
+
+body.landing-mode .gradient-text,
+body.landing-mode .hero-content h1 span,
+body.landing-mode .stat-card strong {
+  background: linear-gradient(135deg, #800080, #b400b4, hsl(43 97% 52%)) !important;
+  background-size: 200% 200% !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  animation: hero-word-gradient 5s ease-in-out infinite !important;
+}
+
+body.landing-mode .hero-content .split-text {
+  max-width: 672px !important;
+  color: hsl(var(--muted-foreground)) !important;
+  font-size: clamp(18px, 1.8vw, 20px) !important;
+  line-height: 1.625 !important;
+}
+
+body.landing-mode .search-shell {
+  max-width: 576px !important;
+  margin-top: 32px !important;
+}
+
+body.landing-mode .neon-search-box {
+  border: 0 !important;
+  border-radius: 16px !important;
+  background: hsl(0 0% 100%) !important;
+  overflow: visible !important;
+  isolation: isolate !important;
+}
+
+body.landing-mode .neon-search-box::before {
+  inset: -2px !important;
+  z-index: 0 !important;
+  border-radius: 17.6px !important;
+  background: conic-gradient(from var(--neon-angle), hsl(300 100% 25% / 0.1), hsl(43 97% 52% / 0.7), hsl(300 100% 25% / 0.5), hsl(43 97% 52% / 0.1), hsl(300 100% 25% / 0.1)) !important;
+}
+
+body.landing-mode .neon-search-box::after {
+  inset: -6px !important;
+  z-index: -1 !important;
+  border-radius: 20.8px !important;
+  opacity: 1 !important;
+  background: conic-gradient(from var(--neon-angle), transparent, hsl(43 97% 52% / 0.1), transparent, hsl(300 100% 25% / 0.08), transparent) !important;
+}
+
+body.landing-mode .search-card {
+  display: flex !important;
+  gap: 8px !important;
+  border: 0 !important;
+  border-radius: 16px !important;
+  padding: 6px !important;
+  background: hsl(var(--card) / 0.8) !important;
+  box-shadow: none !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+}
+
+body.landing-mode .search-card input {
+  height: 48px !important;
+  padding-left: 40px !important;
+}
+
+body.landing-mode .search-card button,
+body.landing-mode .cta-button {
+  background: linear-gradient(180deg, hsl(var(--primary)), hsl(292 88% 32%)) !important;
+  box-shadow: 0 10px 22px hsl(var(--primary) / 0.18) !important;
+  font-weight: 600 !important;
+}
+
+body.landing-mode .search-card button {
+  height: 48px !important;
+  min-width: 120px !important;
+  border-radius: 12px !important;
+  padding: 0 24px !important;
+  gap: 4px !important;
+}
+
+body.landing-mode .stats-section,
+body.landing-mode .cta-section,
+body.landing-mode .landing-footer {
+  border-top: 1px solid hsl(var(--border) / 0.5) !important;
+}
+
+body.landing-mode .stats-section,
+body.landing-mode .inside-section,
+body.landing-mode .cta-section {
+  padding: 80px 0 !important;
+}
+
+body.landing-mode .stats-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 24px !important;
+}
+
+body.landing-mode .glass-card {
+  background: hsl(var(--card)) !important;
+  border: 1px solid hsl(var(--border) / 0.4) !important;
+  box-shadow: var(--shadow-soft) !important;
+  backdrop-filter: blur(18px) !important;
+}
+
+body.landing-mode .stat-card {
+  min-height: 156px !important;
+  border-radius: 16px !important;
+  padding: 24px !important;
+  gap: 8px !important;
+}
+
+body.landing-mode .stat-card svg {
+  width: 24px !important;
+  height: 24px !important;
+  color: hsl(var(--primary)) !important;
+}
+
+body.landing-mode .stat-card strong {
+  font-size: 30px !important;
+}
+
+body.landing-mode .stat-card span {
+  color: hsl(var(--muted-foreground)) !important;
+  font-size: 14px !important;
+}
+
+body.landing-mode .section-heading {
+  margin-bottom: 56px !important;
+}
+
+body.landing-mode .section-heading h2,
+body.landing-mode .cta-card h2 {
+  font-size: clamp(30px, 3.2vw, 40px) !important;
+}
+
+body.landing-mode .section-heading p {
+  color: hsl(var(--muted-foreground)) !important;
+  font-size: 18px !important;
+}
+
+body.landing-mode .feature-grid {
+  max-width: 1024px !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 24px !important;
+}
+
+body.landing-mode .feature-card {
+  min-height: 252px !important;
+  border-radius: 16px !important;
+  padding: 32px !important;
+}
+
+body.landing-mode .feature-title h3 {
+  font-size: 20px !important;
+}
+
+body.landing-mode .feature-title svg {
+  width: 40px !important;
+  height: 40px !important;
+  color: hsl(var(--primary)) !important;
+}
+
+body.landing-mode .feature-card p {
+  min-height: 96px !important;
+  color: hsl(var(--muted-foreground)) !important;
+  font-size: 14px !important;
+  line-height: 1.625 !important;
+}
+
+body.landing-mode .feature-card span {
+  color: hsl(var(--primary)) !important;
+}
+
+body.landing-mode .cta-wrap {
+  max-width: 672px !important;
+}
+
+body.landing-mode .cta-card {
+  border-radius: 24px !important;
+  padding: 40px 56px !important;
+}
+
+body.landing-mode .cta-card:hover {
+  box-shadow: var(--shadow-lift) !important;
+}
+
+body.landing-mode .cta-glow {
+  background: hsl(var(--primary) / 0.08) !important;
+}
+
+body.landing-mode .cta-card > svg {
+  width: 32px !important;
+  height: 32px !important;
+  color: hsl(var(--primary)) !important;
+}
+
+body.landing-mode .cta-card p {
+  color: hsl(var(--muted-foreground)) !important;
+}
+
+body.landing-mode .cta-button {
+  height: 48px !important;
+  border-radius: 12px !important;
+  padding: 0 32px !important;
+  gap: 8px !important;
+  animation: none !important;
+}
+
+body.landing-mode .cta-button::after {
+  display: none !important;
+}
+
+body.landing-mode .landing-footer {
+  padding: 40px 0 !important;
+}
+
+body.landing-mode .landing-footer-brand img {
+  height: 20px !important;
+}
+
+@media (max-width: 1023px) {
+  body.landing-mode .desktop-nav,
+  body.landing-mode .sign-in {
+    display: none !important;
+  }
+
+  body.landing-mode .menu-button {
+    display: grid !important;
+    width: 40px !important;
+    height: 40px !important;
+    border: 0 !important;
+    border-radius: 8px !important;
+    color: hsl(var(--foreground)) !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+}
+
+@media (max-width: 768px) {
+  body.landing-mode .header-inner {
+    padding: 0 1rem !important;
+  }
+
+  body.landing-mode .home-page {
+    padding-top: 64px !important;
+  }
+
+  body.landing-mode .hero-section {
+    padding: 64px 0 72px !important;
+  }
+
+  body.landing-mode .hero-blob {
+    display: none !important;
+  }
+
+  body.landing-mode .hero-content h1 {
+    margin: 28px 0 24px !important;
+    font-size: clamp(48px, 15vw, 72px) !important;
+  }
+
+  body.landing-mode .hero-content .split-text {
+    max-width: 36rem !important;
+    font-size: 18px !important;
+  }
+
+  body.landing-mode .stats-section,
+  body.landing-mode .inside-section,
+  body.landing-mode .cta-section {
+    padding: 64px 0 !important;
+  }
+
+  body.landing-mode .stats-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 16px !important;
+  }
+
+  body.landing-mode .feature-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 520px) {
+  body.landing-mode .container {
+    padding: 0 1rem !important;
+  }
+
+  body.landing-mode .search-shell {
+    max-width: 100% !important;
+  }
+
+  body.landing-mode .search-card {
+    gap: 6px !important;
+    padding: 6px !important;
+  }
+
+  body.landing-mode .search-card button {
+    width: 48px !important;
+    min-width: 48px !important;
+    max-width: 48px !important;
+    padding: 0 !important;
+    font-size: 0 !important;
+  }
+
+  body.landing-mode .search-card button span {
+    display: none !important;
+  }
+
+  body.landing-mode .cta-card {
+    padding: 40px 24px !important;
+  }
+}

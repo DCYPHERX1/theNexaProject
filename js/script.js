@@ -711,6 +711,7 @@ const icons = {
   login: lucideIcon("log-in", `<path d="m10 17 5-5-5-5"/><path d="M15 12H3"/><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>`),
   userPlus: lucideIcon("user-plus", `<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" x2="19" y1="8" y2="14"/><line x1="22" x2="16" y1="11" y2="11"/>`),
   search: lucideIcon("search", `<path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/>`),
+  zap: lucideIcon("zap", `<path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46L12 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46L12 14z"/>`),
   book: lucideIcon("book-open", `<path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/>`),
   file: lucideIcon("file-text", `<path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/>`),
   spark: lucideIcon("sparkles", `<path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3z"/>`),
@@ -2833,10 +2834,10 @@ function shell(content, { auth = false, dashboard = false, admin = false } = {})
             `}
           ` : `
             ${dashboard ? `<button class="${state.route === "dashboard" ? "active" : ""}" data-route="dashboard">Dashboard</button>` : ""}
-            <button class="${state.route === "projects" ? "active" : ""}" data-route="${dashboard ? "projects" : "login"}">Projects</button>
-            <button class="${state.route === "materials" ? "active" : ""}" data-route="${dashboard ? "materials" : "login"}">Materials</button>
+            <button class="${state.route === "projects" ? "active" : ""}" data-route="projects">Projects</button>
+            <button class="${state.route === "materials" ? "active" : ""}" data-route="materials">Materials</button>
             ${dashboard && roleSlug() === "student" ? `<button class="${state.route === "saved" ? "active" : ""}" data-route="saved">Saved</button>` : ""}
-            <button class="${state.route === "search" ? "active" : ""}" data-route="${dashboard ? "search" : "login"}">Search</button>
+            <button class="${state.route === "search" ? "active" : ""}" data-route="search">Search</button>
             ${dashboard && hasStaffWorkspaceAccess() ? `<button class="${state.route === "upload" ? "active" : ""}" data-route="upload">Upload</button><button class="${state.route === "lecturer" ? "active" : ""}" data-route="lecturer">Lecturer</button>` : ""}
             ${dashboard && isRegularAdmin() && hasAdminAccess() ? `<button class="${state.route === "admin" ? "active" : ""}" data-route="admin">Admin</button>` : ""}
           `}
@@ -2857,7 +2858,7 @@ function shell(content, { auth = false, dashboard = false, admin = false } = {})
     ${dashboard || admin ? tutorialOverlay() : ""}
     ${protectedViewerModal()}
     ${bookmarkToast()}
-    ${isSuperAdmin() && (admin || state.route === "settings") ? "" : helpWidget()}
+    ${(state.route === "home" && !state.user) || (isSuperAdmin() && (admin || state.route === "settings")) ? "" : helpWidget()}
   `;
 }
 
@@ -2865,9 +2866,6 @@ function landing() {
   return shell(`
     <main class="home-page">
       <section class="hero-section">
-        <div class="glow glow-left" aria-hidden="true"></div>
-        <div class="glow glow-right" aria-hidden="true"></div>
-        <div class="glow glow-center" aria-hidden="true"></div>
         <div class="hero-blob hero-blob-primary" aria-hidden="true"></div>
         <div class="hero-blob hero-blob-accent" aria-hidden="true"></div>
         <div class="hero-blob hero-blob-center" aria-hidden="true"></div>
@@ -2878,7 +2876,7 @@ function landing() {
           <form class="search-shell neon-search-box fade-up" data-action="search">
             <div class="search-card">
               <label class="search-input-wrap" for="archive-search">${icons.search}<input id="archive-search" name="archiveSearch" type="search" placeholder="Search projects, materials, past questions..." autocomplete="off" /></label>
-              <button class="gradient-primary" type="submit">${icons.search}<span>Search</span></button>
+              <button class="gradient-primary" type="submit">${icons.zap}<span>Search</span></button>
             </div>
           </form>
         </div>
@@ -5336,6 +5334,7 @@ function render(options = {}) {
   updateMeta(route);
   document.body.classList.toggle("auth-lock", authRoutes.includes(route) || (["dashboard", "projects", "materials", "search", "saved", "settings", "upload", "lecturer"].includes(route) && !state.user));
   document.body.classList.toggle("super-admin-mode", Boolean(isSuperAdmin() && (route === "admin" || route === "sentinel" || route === "settings")));
+  document.body.classList.toggle("landing-mode", route === "home" && !state.user);
   document.body.classList.toggle("menu-open", Boolean(state.menuOpen));
   document.body.classList.toggle("notification-lock", Boolean(state.notificationOpen));
   document.body.classList.toggle("protected-viewer-lock", Boolean(state.protectedViewerId));
