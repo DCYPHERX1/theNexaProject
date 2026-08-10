@@ -1,0 +1,11 @@
+{
+  "private": true,
+  "scripts": {
+    "build": "node scripts/build-runtime-config.js",
+    "dev": "node scripts/dev-all.js",
+    "start": "node scripts/dev-all.js",
+    "web": "node scripts/dev-server.js",
+    "backend": "npm --prefix backend start",
+    "check": "node --check js/script.js && node --check js/app-config.js && node --check scripts/dev-server.js && node --check scripts/dev-all.js && node --check scripts/build-runtime-config.js && npm --prefix backend run check"
+  }
+}
